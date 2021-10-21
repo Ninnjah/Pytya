@@ -75,8 +75,8 @@ if __name__ == "__main__":
         public_key, private_key = rsa.newkeys(2048)
 
     # Save keys
-    key_manager.save_key(public_key)
-    key_manager.save_key(private_key)
+    key_manager.save_key(public_key, "public.key")
+    key_manager.save_key(private_key, "private.key")
 
     # Create directory with files
     if not os.path.exists(files_path):
