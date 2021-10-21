@@ -36,6 +36,9 @@ class EncrypterThread(threading.Thread):
                 f"{Fore.LIGHTRED_EX}File {file} was encruptad! Files left {files_count-file_num-1}/{files_count}"
             )
 
+        self.stop()
+        return
+
     def stop(self):
         self._stop = True
 
