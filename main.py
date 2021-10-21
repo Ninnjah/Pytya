@@ -8,10 +8,14 @@ from colorama import Fore
 from utils import cli
 from utils import key_manager
 
+
 if __name__ == "__main__":
     colorama.init(autoreset=True)
+
     public_path: str = os.path.abspath("public.key")
     private_path: str = os.path.abspath("private.key")
+    files_path: str = os.path.abspath("ur imoprtent files")
+
     clear: Callable[[], None] = lambda: print("\033[H\033[J", end="")
 
     print("Loading...")
@@ -32,5 +36,13 @@ if __name__ == "__main__":
     # Save keys
     key_manager.save_key(public_key)
     key_manager.save_key(private_key)
+
+    # Create directory with files
+    if not os.path.exists(files_path):
+        os.mkdir(files_path)
+
+    for i in range(20):
+        with open(f"{files_path}\\imoprtent_file_{i}", "w") as f:
+            f.write("\n".join("som of ur importent info" for _ in range(100)))
 
     clear()
