@@ -8,7 +8,6 @@ import rsa
 import colorama
 from colorama import Fore, Back
 
-from utils import cli
 from utils import key_manager
 
 
