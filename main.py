@@ -1,4 +1,7 @@
 import os
+import threading
+from time import sleep
+import msvcrt
 from typing import Callable
 
 import rsa
@@ -7,6 +10,25 @@ from colorama import Fore
 
 from utils import cli
 from utils import key_manager
+
+
+class EncrypterThread(threading.Thread):
+    def __init__(self, dir_: str):
+        super(EncrypterThread, self).__init__()
+        self._stop = False
+        self._dir = dir_
+
+    def run(self):
+        for file_num, file in enumerate(os.listdir(self._dir)):
+            if self._stop:
+                print("Encryption was stoped")
+                break
+
+            sleep(1)
+            print(file_num, file)
+
+    def stop(self):
+        self._stop = True
 
 
 if __name__ == "__main__":
